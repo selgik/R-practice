@@ -3,11 +3,12 @@
 
 #TABLE OF CONTENTS#
 #PART1: INSTALL AND LOAD PACKAGES
-#PART2: FUNCTION, VARIABLE AND DOCUMENTS
-#PART3: VECTOR, LIST, MATRIX AND DATA FRAME
-#PART4: LOGICAL OPERATION AND CONDITIONAL STATEMENT
-#PART5: REVIEW, MANIPULATE AND VIZ DATA (BASICS)
-#PART6: NESTED AND PIPE
+#PART2: IMPORT AND PREPARE DATA
+#PART3: FUNCTION, VARIABLE AND DOCUMENTS
+#PART4: VECTOR, LIST, MATRIX AND DATA FRAME
+#PART5: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#PART6: REVIEW, MANIPULATE AND VIZ DATA (BASICS)
+#PART7: NESTED AND PIPE
 
 ###
 
@@ -33,7 +34,12 @@ summary(penguins)
 View(penguins)
 
 
-#PART2: FUNCTION, VARIABLE AND DOCUMENTS
+#PART2: IMPORT AND PREPARE DATA
+test_file <- read_csv("test.csv")
+test_extract <- select(test_file, column1, column2, column3)
+
+
+#PART3: FUNCTION, VARIABLE AND DOCUMENTS
 #1. functions: print 
 print("Today is January 02, 2022")
 
@@ -49,7 +55,7 @@ variable_y-23.45
 browseVignettes("tidyverse")
 
 
-#PART3: VECTOR, LIST, MATRIX AND DATA FRAME
+#PART4: VECTOR, LIST, MATRIX AND DATA FRAME
 #1. vector: A group of data elements of the same type stored in a sequence
 vec_1 <- c(12,34,56,78.9)
 vec_2 <- c(1L, 5L, 10L)
@@ -79,7 +85,7 @@ matrix(c(3:10), nrow=2)
 matrix(c(3:10), ncol=2)
 
 
-#PART4: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#PART5: LOGICAL OPERATION AND CONDITIONAL STATEMENT
 #1. logical operators: and &, or |, not!
 x <-10
 x<12 & x>11      #FALSE
@@ -105,7 +111,7 @@ print("Group3")
 }
 
 
-#PART5: REVIEW, MANIPULATE AND VIZ DATA (BASICS)
+#PART6: REVIEW, MANIPULATE AND VIZ DATA (BASICS)
 #1. view summary: disply columns and first few rows 
 head(diamonds)
 
@@ -134,7 +140,7 @@ ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) +
  facet_wrap(~cut)
 
 
-#PART6: NESTED AND PIPE
+#PART7: NESTED AND PIPE
 #1. filter and sort data step by step 
 data("ToothGrowth")
 View(ToothGrowth)
