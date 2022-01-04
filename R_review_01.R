@@ -63,7 +63,12 @@ vec_1
 list('x-axis'=1, 'y-axis'=2, 'z-axis'=3)
 
 #4. data frame: collection of columns, typically imported from different source
-data.frame(x=c(1,2,3), y=c(2.4, 4.4, 5.1), z=c("NY", "SF", "CO"))
+data.frame(city=c("NY", "SF", "CO"), days=c(2.4, 4.4, 5.1), rank=c(2,1,3))
+#or step-by-step
+city <- c("NY", "SF", "CO")
+days <- c(2.4, 4.4, 5.1)
+rank <- c(2,5,77)
+result <- data.frame(city,days,rank)
 
 #5. matrix: two-dimentional collection of data elements, containing a single data type
 #matrix(c(3:9), nrow=2) will give an error, as 7 elemetns are not 2x multiplier
