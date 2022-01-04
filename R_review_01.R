@@ -109,10 +109,13 @@ colnames(diamonds)
 #3. rename column or variable: rename(dataset, new_name=old_name) 
 rename(diamonds, carat_new=carat)
 
-#4. summary statistics: summarize(dataset, col_name=mean(col))
+#4 add column: mutate(dataset, new_column=explain)
+mutate(diamonds, carat_2=carat*100)
+       
+#5. summary statistics: summarize(dataset, col_name=mean(col))
 summarize(diamonds, mean_carat=mean(carat))
 
-#5. viz data
+#6. viz data
 ggplot(data=diamonds, aes(x=carat, y=price))+ geom_point()
 
 ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) + 
