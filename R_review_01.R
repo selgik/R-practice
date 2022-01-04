@@ -20,8 +20,11 @@ installed.packages()
 #2. install package if needed
 install.packages("palmerpenguins")
 
-#3. load package before using it. Nothing will show up in the console: library() / data()
+#3. load package before using it. Nothing will show up in the console: library(package) / data(dataset)
+#data() will display list of available datasets.
+
 library("palmerpenguins")
+data(penguins)
 
 #4. get summary. Results will appear in the console
 summary(penguins)
