@@ -20,7 +20,7 @@ installed.packages()
 #2. install package if needed
 install.packages("palmerpenguins")
 
-#3. load package before using it. Nothing will show up in the console
+#3. load package before using it. Nothing will show up in the console: library() / data("")
 library("palmerpenguins")
 
 #4. get summary. Results will appear in the console
