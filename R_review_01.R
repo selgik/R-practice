@@ -23,21 +23,25 @@ install.packages("palmerpenguins")
 
 #3. load package before using it. Nothing will show up in the console: library(package) / data(dataset)
 #data() will display list of available datasets.
-
 library("palmerpenguins")
 data(penguins)
 
 #4. get summary. Results will appear in the console
 summary(penguins)
 
-#5. View will show reader-friendly table separately
+#5. View will display reader-friendly table separately
 View(penguins)
 
 
 #PART2: IMPORT AND PREPARE DATA
+#1. working with csv: import csv file and select certain columns
 test_file <- read_csv("test.csv")
 test_extract <- select(test_file, column1, column2, column3)
 
+#2. working with excel: import excel file and read specific sheet
+read_excel("test.xls")
+excel_sheets("test.xls")
+read_excel("test.xls", sheet="sales")
 
 #PART3: FUNCTION, VARIABLE AND DOCUMENTS
 #1. functions: print 
