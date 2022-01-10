@@ -1,5 +1,5 @@
 #PURPOSE OF THE POST: to practice and review R codes
-#PACKAGE USED: tidyverse, palmerpenguins, dplyr
+#PACKAGE USED: tidyverse, palmerpenguins, dplyr, here, skimr, janitor
 
 #TABLE OF CONTENTS#
 #PART1: INSTALL AND LOAD PACKAGES
@@ -41,19 +41,28 @@ read_excel("test.xls", sheet="sales")
 
 #----- PART3: REVIEW SUMMARY OF DATA
 #1. View will display data in reader-friendly table format
-View(diamonds)
+View(penguins)
 
 #2. view summary statistics
-skim_without_charts(diamonds)      
-summary(diamonds)                  
+skim_without_charts(penguins)      
+summary(penguins)                  
 
 #3. view summary: disply columns and first few rows, more of preview of data
-head(diamonds)
-glimpse(diamonds)
+head(penguins)
+glimpse(penguins)
 
 #4. view column summary
-str(diamonds)
-colnames(diamonds)
+str(penguins)
+colnames(penguins)
+
+#5. view specific column(s)
+select(penguins,species) # sames as below
+penguins %>%
+  select(species)
+
+#by adding - before the column, will display all columns except for species
+penguins %>%
+  select(-species)
 
 
 #----- PART4: FUNCTION, VARIABLE AND DOCUMENTS
@@ -131,14 +140,24 @@ print("Group3")
 #----- PART7: MANIPULATE AND VIZ DATA (BASICS)
 #1. rename column or variable: rename(dataset, new_name=old_name) 
 rename(diamonds, carat_new=carat)
+#similarly, this can be written in pipe
+diamonds %>%
+  rename(carat_new=carat)
 
-#2. add column: mutate(dataset, new_column=explain)
+#2. update all columns to upper/lower case
+rename_with(diamonds,toupper)
+rename_with(diamonds,tolower)
+
+#3. clean column names by ensuring only characters, numbers and _ are in the columns
+clean_names(diamonds)
+
+#4. add column: mutate(dataset, new_column=explain)
 mutate(diamonds, carat_2=carat*100)
        
-#3. summary statistics: summarize(dataset, col_name=mean(col))
+#5. summary statistics: summarize(dataset, col_name=mean(col))
 summarize(diamonds, mean_carat=mean(carat))
 
-#4. viz data
+#6. viz data
 ggplot(data=diamonds, aes(x=carat, y=price))+ geom_point()
 
 ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) + 
