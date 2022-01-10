@@ -4,17 +4,18 @@
 #TABLE OF CONTENTS#
 #PART1: INSTALL AND LOAD PACKAGES
 #PART2: IMPORT AND PREPARE DATA
-#PART3: FUNCTION, VARIABLE AND DOCUMENTS
-#PART4: VECTOR, LIST, MATRIX AND DATA FRAME
-#PART5: LOGICAL OPERATION AND CONDITIONAL STATEMENT
-#PART6: REVIEW, MANIPULATE AND VIZ DATA (BASICS)
-#PART7: NESTED AND PIPE
+#PART3: REVIEW SUMMARY OF DATA
+#PART4: FUNCTION, VARIABLE AND DOCUMENTS
+#PART5: VECTOR, LIST, MATRIX AND DATA FRAME
+#PART6: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#PART7: MANIPULATE AND VIZ DATA (BASICS)
+#PART8: NESTED AND PIPE
 
 ###
 
 
 
-#PART1: INSTALL AND LOAD PACKAGES
+#----- PART1: INSTALL AND LOAD PACKAGES
 #1. check installed packages
 installed.packages()
 
@@ -26,14 +27,8 @@ install.packages("palmerpenguins")
 library("palmerpenguins")
 data(penguins)
 
-#4. get summary. Results will appear in the console
-summary(penguins)
 
-#5. View will display reader-friendly table separately
-View(penguins)
-
-
-#PART2: IMPORT AND PREPARE DATA
+#----- PART2: IMPORT AND PREPARE DATA
 #1. working with csv: import csv file and select certain columns
 test_file <- read_csv("test.csv")
 test_extract <- select(test_file, column1, column2, column3)
@@ -43,7 +38,25 @@ read_excel("test.xls")
 excel_sheets("test.xls")
 read_excel("test.xls", sheet="sales")
 
-#PART3: FUNCTION, VARIABLE AND DOCUMENTS
+
+#----- PART3: REVIEW SUMMARY OF DATA
+#1. View will display data in reader-friendly table format
+View(diamonds)
+
+#2. view summary statistics
+skim_without_charts(diamonds)      
+summary(diamonds)                  
+
+#3. view summary: disply columns and first few rows, more of preview of data
+head(diamonds)
+glimpse(diamonds)
+
+#4. view column summary
+str(diamonds)
+colnames(diamonds)
+
+
+#----- PART4: FUNCTION, VARIABLE AND DOCUMENTS
 #1. functions: print 
 print("Today is January 02, 2022")
 
@@ -59,7 +72,7 @@ variable_y-23.45
 browseVignettes("tidyverse")
 
 
-#PART4: VECTOR, LIST, MATRIX AND DATA FRAME
+#----- PART5: VECTOR, LIST, MATRIX AND DATA FRAME
 #1. vector: A group of data elements of the same type stored in a sequence
 vec_1 <- c(12,34,56,78.9)
 vec_2 <- c(1L, 5L, 10L)
@@ -89,7 +102,7 @@ matrix(c(3:10), nrow=2)
 matrix(c(3:10), ncol=2)
 
 
-#PART5: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#----- PART6: LOGICAL OPERATION AND CONDITIONAL STATEMENT
 #1. logical operators: and &, or |, not!
 x <-10
 x<12 & x>11      #FALSE
@@ -115,25 +128,17 @@ print("Group3")
 }
 
 
-#PART6: REVIEW, MANIPULATE AND VIZ DATA (BASICS)
-#1. view summary: disply columns and first few rows 
-head(diamonds)
-
-#2. view column summary: function(dataset)
-str(diamonds)
-glimpse(diamonds)
-colnames(diamonds)
-
-#3. rename column or variable: rename(dataset, new_name=old_name) 
+#----- PART7: MANIPULATE AND VIZ DATA (BASICS)
+#1. rename column or variable: rename(dataset, new_name=old_name) 
 rename(diamonds, carat_new=carat)
 
-#4 add column: mutate(dataset, new_column=explain)
+#2. add column: mutate(dataset, new_column=explain)
 mutate(diamonds, carat_2=carat*100)
        
-#5. summary statistics: summarize(dataset, col_name=mean(col))
+#3. summary statistics: summarize(dataset, col_name=mean(col))
 summarize(diamonds, mean_carat=mean(carat))
 
-#6. viz data
+#4. viz data
 ggplot(data=diamonds, aes(x=carat, y=price))+ geom_point()
 
 ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) + 
@@ -144,7 +149,7 @@ ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) +
  facet_wrap(~cut)
 
 
-#PART7: NESTED AND PIPE
+#PART8: NESTED AND PIPE
 #1. filter and sort data step by step 
 data("ToothGrowth")
 View(ToothGrowth)
