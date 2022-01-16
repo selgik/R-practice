@@ -152,15 +152,20 @@ clean_names(diamonds)
 #4. combine columns
 example <- bookings_data %>%
   select(arrival_date_year, arrival_date_month) %>%
-  unite(arrivatl_year_month, c("arrival_date_year", "arrival_date_month"), sep = " ,")
+  unite(arrival_year_month, c("arrival_date_year", "arrival_date_month"), sep = " ,")
 
-#5. add column: mutate(dataset, new_column=explain)
+unite(bookings_data, 'arrival_year_month', arrival_data_year, arrival_date_month, sep= ' ,')
+  
+#5. separate column
+separate(example, arrival_year_month, into=c('arrival_date_year', 'arrival_date_month'), sep= ' ')
+
+#6. add column: mutate(dataset, new_column=explain)
 mutate(diamonds, carat_2=carat*100)
 
-example2 <- bookings_data %>%
+example_2 <- bookings_data %>%
   mutate(total_guests=adults+children+babies)
 
-#6. summary statistics: summarize(dataset, col_name=mean(col))
+#7. summary statistics: summarize(dataset, col_name=mean(col))
 summarize(diamonds, mean_carat=mean(carat))
 
 example3 <-bookings_data %>%
