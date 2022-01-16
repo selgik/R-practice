@@ -1,17 +1,70 @@
-#PURPOSE OF THE POST: to practice and review R codes
+#PURPOSE OF THE POST: review R codes
 #PACKAGE USED: tidyverse, palmerpenguins, dplyr, here, skimr, janitor
 
 #TABLE OF CONTENTS#
+
+#BASIC1: VECTOR, LIST, MATRIX AND DATA FRAME
+#BASIC2: FUNCTION, VARIABLE AND DOCUMENTS
+
 #PART1: INSTALL AND LOAD PACKAGES
 #PART2: IMPORT AND PREPARE DATA
-#PART3: REVIEW SUMMARY OF DATA
-#PART4: FUNCTION, VARIABLE AND DOCUMENTS
-#PART5: VECTOR, LIST, MATRIX AND DATA FRAME
-#PART6: LOGICAL OPERATION AND CONDITIONAL STATEMENT
-#PART7: MANIPULATE AND VIZ DATA (BASICS)
-#PART8: NESTED AND PIPE
+#PART3: VIEW SUMMARY DATA
+#PART4: ORGANIZE DATA
+#PART5: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#PART6: MANIPULATE AND VIZ DATA (BASICS)
+#PART7: NESTED AND PIPE
 
 ###
+
+
+
+
+#----- BASIC1: VECTOR, LIST, MATRIX AND DATA FRAME
+#1. vector: A group of data elements of the same type stored in a sequence
+vec_1 <- c(12,34,56,78.9)
+vec_2 <- c(1L, 5L, 10L)
+vec_3 <- c("Anna", "Beta", "Cera")
+
+#2. list: similar to vector but containing different type 
+list("a", 1L, 3.5, FALSE)
+
+#3. calculate elements, assign titles for vector and list
+length(vec_1)
+names(vec_1) <- c("x-axis", "y-axis", "z-axis", "average")
+
+list('x-axis'=1, 'y-axis'=2, 'z-axis'=3)
+
+#4. data frame: collection of columns, typically imported from different source
+data.frame(city=c("NY", "SF", "CO"), days=c(2.4, 4.4, 5.1), rank=c(2,1,3))
+#or step-by-step
+city <- c("NY", "SF", "CO")
+days <- c(2.4, 4.4, 5.1)
+rank <- c(2,5,77)
+result <- data.frame(city,days,rank)
+
+#5. matrix: two-dimentional collection of data elements, containing a single data type
+#matrix(c(3:9), nrow=2) will give an error, as 7 elemetns are not 2x multiplier
+matrix(c(3:10), nrow=2)
+matrix(c(3:10), ncol=2)
+
+
+#----- BASIC2: FUNCTION, VARIABLE AND DOCUMENTS
+#1. functions: print 
+print("Today is January 02, 2022")
+
+#2. variable: also called as objects
+variable_x <- "this is variable"
+variable_y <- 123.45
+variable_y-23.45
+
+#3. ask about function: add ? before function name
+?print()
+
+#4. ask about package: package guide
+browseVignettes("tidyverse")
+
+
+
 
 
 
@@ -39,7 +92,7 @@ excel_sheets("test.xls")
 read_excel("test.xls", sheet="sales")
 
 
-#----- PART3: REVIEW SUMMARY OF DATA
+#----- PART3: VIEW SUMMARY DATA
 #1. View will display data in reader-friendly table format
 View(penguins)
 
@@ -65,53 +118,25 @@ penguins %>%
   select(-species)
 
 
-#----- PART4: FUNCTION, VARIABLE AND DOCUMENTS
-#1. functions: print 
-print("Today is January 02, 2022")
+#----- PART4: ORGANIZE DATA
+#1. arrange (sort) data. By adding - sign, you can sort DESC instead of default ASC
+arrange(penguins, bill_length_mm)
+penguins %>% arrange(bill_length_mm)
+penguins %>% arrange(-bill_length_mm)
 
-#2. variable: also called as objects
-variable_x <- "this is variable"
-variable_y <- 123.45
-variable_y-23.45
+#2. group data -> remove NA value -> summarize them
+penguins %>% group_by(island) %>% drop_na() %>% summarize(mean_bl_value=mean(bill_length_mm))
+penguins %>% group_by(species, island) %>% drop_na() %>%
+  summarize(mean_bl=mean(bill_length_mm), max_bl=max(bill_length_mm))
 
-#3. ask about function: add ? before function name
-?print()
+#3. filter value
+penguins %>% filter(species == "Gentoo")
 
-#4. ask about package: package guide
-browseVignettes("tidyverse")
-
-
-#----- PART5: VECTOR, LIST, MATRIX AND DATA FRAME
-#1. vector: A group of data elements of the same type stored in a sequence
-vec_1 <- c(12,34,56,78.9)
-vec_2 <- c(1L, 5L, 10L)
-vec_3 <- c("Anna", "Beta", "Cera")
-
-#2. list: similar to vector but containing different type 
-list("a", 1L, 3.5, FALSE)
-
-#3. calculate elements, assign titles for vector and list
-length(vec_1)
-names(vec_1) <- c("x-axis", "y-axis", "z-axis", "average")
-vec_1
-
-list('x-axis'=1, 'y-axis'=2, 'z-axis'=3)
-
-#4. data frame: collection of columns, typically imported from different source
-data.frame(city=c("NY", "SF", "CO"), days=c(2.4, 4.4, 5.1), rank=c(2,1,3))
-#or step-by-step
-city <- c("NY", "SF", "CO")
-days <- c(2.4, 4.4, 5.1)
-rank <- c(2,5,77)
-result <- data.frame(city,days,rank)
-
-#5. matrix: two-dimentional collection of data elements, containing a single data type
-#matrix(c(3:9), nrow=2) will give an error, as 7 elemetns are not 2x multiplier
-matrix(c(3:10), nrow=2)
-matrix(c(3:10), ncol=2)
+#4. save cleaned data frame
+cleaned_penguins <- penguins %>% arrange(bill_length_mm)
 
 
-#----- PART6: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#----- PART5: LOGICAL OPERATION AND CONDITIONAL STATEMENT
 #1. logical operators: and &, or |, not!
 x <-10
 x<12 & x>11      #FALSE
@@ -137,7 +162,7 @@ print("Group3")
 }
 
 
-#----- PART7: MANIPULATE AND VIZ DATA (BASICS)
+#----- PART6: MANIPULATE AND VIZ DATA (BASICS)
 #1. rename column or variable: rename(dataset, new_name=old_name) 
 rename(diamonds, carat_new=carat)
 #similarly, this can be written in pipe
@@ -168,7 +193,7 @@ ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) +
  facet_wrap(~cut)
 
 
-#PART8: NESTED AND PIPE
+#PART7: NESTED AND PIPE
 #1. filter and sort data step by step 
 data("ToothGrowth")
 View(ToothGrowth)
