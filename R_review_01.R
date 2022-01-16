@@ -10,9 +10,9 @@
 #PART2: IMPORT AND PREPARE DATA
 #PART3: VIEW SUMMARY DATA
 #PART4: ORGANIZE DATA
-#PART5: LOGICAL OPERATION AND CONDITIONAL STATEMENT
-#PART6: MANIPULATE AND VIZ DATA (BASICS)
-#PART7: NESTED AND PIPE
+#PART5: MANIPULATE AND VIZ DATA (BASICS)
+#PART6: NESTED AND PIPE
+#PART7: LOGICAL OPERATION AND CONDITIONAL STATEMENT
 
 ###
 
@@ -136,33 +136,7 @@ penguins %>% filter(species == "Gentoo")
 cleaned_penguins <- penguins %>% arrange(bill_length_mm)
 
 
-#----- PART5: LOGICAL OPERATION AND CONDITIONAL STATEMENT
-#1. logical operators: and &, or |, not!
-x <-10
-x<12 & x>11      #FALSE
-x<12 | x>11      #TRUE
-!x>11            #TRUE
-!(x>15 | x<5)    #TRUE
-
-#2. conditional statement: if(){then}
-x<- 5
-if(x>0){
-print("x is a positive number")
-} else {
-print("x is a negative number")
-}
-
-y <-1982
-if (y>1990) {
-print("Group1")
-} else if (y>1980) {
-print("Group2")
-} else {
-print("Group3")
-}
-
-
-#----- PART6: MANIPULATE AND VIZ DATA (BASICS)
+#----- PART5: MANIPULATE AND VIZ DATA (BASICS)
 #1. rename column or variable: rename(dataset, new_name=old_name) 
 rename(diamonds, carat_new=carat)
 #similarly, this can be written in pipe
@@ -193,7 +167,7 @@ ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) +
  facet_wrap(~cut)
 
 
-#PART7: NESTED AND PIPE
+#PART6: NESTED AND PIPE
 #1. filter and sort data step by step 
 data("ToothGrowth")
 View(ToothGrowth)
@@ -221,6 +195,32 @@ filter(dose==0.5) %>%
 group_by(supp) %>%
 summarize(mean_len=mean(len,na.rm=T),.group="drop")
 View(filtered_toothgrowth)
+
+
+#----- PART7: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#1. logical operators: and &, or |, not!
+x <-10
+x<12 & x>11      #FALSE
+x<12 | x>11      #TRUE
+!x>11            #TRUE
+!(x>15 | x<5)    #TRUE
+
+#2. conditional statement: if(){then}
+x<- 5
+if(x>0){
+print("x is a positive number")
+} else {
+print("x is a negative number")
+}
+
+y <-1982
+if (y>1990) {
+print("Group1")
+} else if (y>1980) {
+print("Group2")
+} else {
+print("Group3")
+}
 
 
 ###END
