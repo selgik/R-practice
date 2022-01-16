@@ -9,9 +9,10 @@
 #PART2: IMPORT AND PREPARE DATA
 #PART3: VIEW SUMMARY DATA
 #PART4: ORGANIZE DATA
-#PART5: MANIPULATE AND VIZ DATA (BASICS)
-#PART6: NESTED AND PIPE
-#PART7: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#PART5: MANIPULATE DATA
+#PART6: VISUALIZE DATA
+#PART7: NESTED AND PIPE
+#PART8: LOGICAL OPERATION AND CONDITIONAL STATEMENT
 
 ###
 
@@ -131,9 +132,10 @@ penguins %>% filter(species == "Gentoo")
 
 #4. save cleaned data frame
 cleaned_penguins <- penguins %>% arrange(bill_length_mm)
+cleaned2_penguins <- penguins %>% select(island, species)
 
 
-#----- PART5: MANIPULATE AND VIZ DATA (BASICS)
+#----- PART5: MANIPULATE DATA
 #1. rename column or variable: rename(dataset, new_name=old_name) 
 rename(diamonds, carat_new=carat)
 #similarly, this can be written in pipe
@@ -147,13 +149,32 @@ rename_with(diamonds,tolower)
 #3. clean column names by ensuring only characters, numbers and _ are in the columns
 clean_names(diamonds)
 
-#4. add column: mutate(dataset, new_column=explain)
+#4. combine columns
+example <- bookings_data %>%
+  select(arrival_date_year, arrival_date_month) %>%
+  unite(arrivatl_year_month, c("arrival_date_year", "arrival_date_month"), sep = " ,")
+
+#5. add column: mutate(dataset, new_column=explain)
 mutate(diamonds, carat_2=carat*100)
-       
-#5. summary statistics: summarize(dataset, col_name=mean(col))
+
+example2 <- bookings_data %>%
+  mutate(total_guests=adults+children+babies)
+
+#6. summary statistics: summarize(dataset, col_name=mean(col))
 summarize(diamonds, mean_carat=mean(carat))
 
-#6. viz data
+example3 <-bookings_data %>%
+  summarize(number_canceled=sum(is_canceled),
+            average_lead_time=mean(lead_time))
+
+example4 <- bookings_data %>%
+  mutate(number_canceled=sum(is_canceled),
+         average_lead_time=mean(lead_time))
+
+#example3 vs example4: ex3 shows summary statistics in one line. head() works well for ex3.
+
+
+#----- PART6: VISUALIZE DATA
 ggplot(data=diamonds, aes(x=carat, y=price))+ geom_point()
 
 ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) + 
@@ -164,7 +185,7 @@ ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) +
  facet_wrap(~cut)
 
 
-#PART6: NESTED AND PIPE
+#----- PART7: NESTED AND PIPE
 #1. filter and sort data step by step 
 data("ToothGrowth")
 View(ToothGrowth)
@@ -194,7 +215,7 @@ summarize(mean_len=mean(len,na.rm=T),.group="drop")
 View(filtered_toothgrowth)
 
 
-#----- PART7: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#----- PART8: LOGICAL OPERATION AND CONDITIONAL STATEMENT
 #1. logical operators: and &, or |, not!
 x <-10
 x<12 & x>11      #FALSE
