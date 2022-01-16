@@ -93,21 +93,19 @@ read_excel("test.xls", sheet="sales")
 
 #----- PART3: VIEW SUMMARY DATA
 #1. View will display data in reader-friendly table format
-View(penguins)
+View(penguins)  
 
-#2. view summary statistics
-skim_without_charts(penguins)      
+#2. view summary: disply columns and first few rows, more of preview of data
+head(penguins)
+colnames(penguins)
+glimpse(penguins)
+str(penguins)
+
+#3. view summary statistics
+skim_without_charts(penguins) 
 summary(penguins)                  
 
-#3. view summary: disply columns and first few rows, more of preview of data
-head(penguins)
-glimpse(penguins)
-
-#4. view column summary
-str(penguins)
-colnames(penguins)
-
-#5. view specific column(s)
+#4. view specific column(s)
 select(penguins,species) # sames as below
 penguins %>%
   select(species)
