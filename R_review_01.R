@@ -2,7 +2,6 @@
 #PACKAGE USED: tidyverse, palmerpenguins, dplyr, here, skimr, janitor
 
 #TABLE OF CONTENTS#
-
 #BASIC1: VECTOR, LIST, MATRIX AND DATA FRAME
 #BASIC2: FUNCTION, VARIABLE AND DOCUMENTS
 
