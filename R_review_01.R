@@ -14,7 +14,8 @@
 #PART7: NESTED AND PIPE
 #PART8: LOGICAL OPERATION AND CONDITIONAL STATEMENT
 
-#TIP  : DO NOT TRUST DATA 
+#TIP1 : DO NOT TRUST DATA 
+#TIP2 : CHECK THE BIAS
 ###
 
 
@@ -247,7 +248,7 @@ print("Group3")
 }
 
 
-#----- TIP: DO NOT TRUST DATA
+#----- TIP1: DO NOT TRUST DATA
 #1. Summary may indicate the similar dataset for below groups
 libary('Tmisc')
 data('quartet')
@@ -258,5 +259,21 @@ quartet %>%
 #2. Visualizing them will reveal the difference between the grouped data
 ggplot(quartet,aes(x,y))+geom_point()+geom_smooth(method=lm,se=FALSE)+facet_wrap(~set)
 
+#----- TIP2: CHECK THE BIAS
+#1. package needed
+isntall.packages("SimDesign")
+library("SimDesign")
+
+#2. compare data
+actual_data <- c(10,20,30,40,50)
+predicted_data <-c(8,14,22,39,45)
+bias(actual_data,predicted_data)
+#result: [1] 4.4 
+
+actual_data2 <- c(10,20,30,40,50)
+predicted_data2 <- c(12,24,39,47,55)
+bias(actual_data2, predicted_data2)
+#result: [1] -5.4 
+#the more the result is closer to 0, the less the dataset is biased
 
 ###END
