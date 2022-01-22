@@ -125,15 +125,21 @@ arrange(penguins, desc(bill_length_mm))
 penguins %>% arrange(bill_length_mm)
 penguins %>% arrange(-bill_length_mm)
 
-#2. group data -> remove NA value -> summarize them
+#2. max, min, mean: if dataset contains NA, result will show as NA
+min(penguins$year)
+max(penguins$year)
+mean(penguins$year)
+
+#3. group data -> remove NA value -> summarize them
 penguins %>% group_by(island) %>% drop_na() %>% summarize(mean_bl_value=mean(bill_length_mm))
 penguins %>% group_by(species, island) %>% drop_na() %>%
   summarize(mean_bl=mean(bill_length_mm), max_bl=max(bill_length_mm))
 
-#3. filter value
+#4. filter value
+filter(penguins, species=='Gentoo')
 penguins %>% filter(species == "Gentoo")
 
-#4. save cleaned data frame
+#5. save cleaned data frame
 cleaned_penguins <- penguins %>% arrange(bill_length_mm)
 cleaned2_penguins <- penguins %>% select(island, species)
 
