@@ -14,6 +14,7 @@
 #PART7: NESTED AND PIPE
 #PART8: LOGICAL OPERATION AND CONDITIONAL STATEMENT
 
+#TIP  : DO NOT TRUST DATA 
 ###
 
 
@@ -244,6 +245,18 @@ print("Group2")
 } else {
 print("Group3")
 }
+
+
+#----- TIP: DO NOT TRUST DATA
+#1. Summary may indicate the similar dataset for below groups
+libary('Tmisc')
+data('quartet')
+quartet %>%
+  group_by(set) %>%
+  summarize(mean(x),sd(x),mean(y),sd(y),cor(x,y))
+
+#2. Visualizing them will reveal the difference between the grouped data
+ggplot(quartet,aes(x,y))+geom_point()+geom_smooth(method=lm,se=FALSE)+facet_wrap(~set)
 
 
 ###END
