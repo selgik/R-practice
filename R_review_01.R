@@ -121,6 +121,7 @@ penguins %>%
 #----- PART4: ORGANIZE DATA
 #1. arrange (sort) data. By adding - sign, you can sort DESC instead of default ASC
 arrange(penguins, bill_length_mm)
+arrange(penguins, desc(bill_length_mm))
 penguins %>% arrange(bill_length_mm)
 penguins %>% arrange(-bill_length_mm)
 
