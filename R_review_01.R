@@ -189,6 +189,12 @@ example4 <- bookings_data %>%
 
 
 #----- PART6: VISUALIZE DATA
+#1. basic
+ggplot(data=penguins) + geom_point(mapping=aes(x=flipper_length_mm, y=body_mass_g))
+ggplot(data=penguins, mapping=aes(x=flipper_length_mm, y=body_mass_g)) + geom_point
+
+
+#2. applying other concepts 
 ggplot(data=diamonds, aes(x=carat, y=price))+ geom_point()
 
 ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) + 
@@ -265,6 +271,7 @@ quartet %>%
 
 #2. Visualizing them will reveal the difference between the grouped data
 ggplot(quartet,aes(x,y))+geom_point()+geom_smooth(method=lm,se=FALSE)+facet_wrap(~set)
+
 
 #----- TIP2: CHECK THE BIAS
 #1. package needed
