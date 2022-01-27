@@ -201,6 +201,7 @@ ggplot(data=penguins)+geom_point(mapping=aes(x=plipper_length_mm,y=body_mass_g,a
 #alternatives
 ggplot(data=penguins, aes(x=flipper_length_mm, y=body_mass_g)) + geom_point()
 ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g,color=species))+geom_point()
+ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g,color=species))+geom_point(color="purple")
 ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g,color=species))+geom_point()+facet_wrap(~species)
 
 #3. do not map the color to specific variable but apply to entire chart
