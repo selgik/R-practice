@@ -193,16 +193,18 @@ example4 <- bookings_data %>%
 ggplot(data=penguins) + geom_point(mapping=aes(x=flipper_length_mm, y=body_mass_g))
 ggplot(data=penguins, mapping=aes(x=flipper_length_mm, y=body_mass_g)) + geom_point
 
+#2. map color, size, shape or alpha(difference in density)
+ggplot(data=penguins)+geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g,color=species))
+ggplot(data=penguins)+geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g,color=species,shape=species))
+ggplot(data=penguins)+geom_point(mapping=aes(x=plipper_length_mm,y=body_mass_g,alpha=species))
 
-#2. applying other concepts 
-ggplot(data=diamonds, aes(x=carat, y=price))+ geom_point()
+#alternatives
+ggplot(data=penguins, aes(x=flipper_length_mm, y=body_mass_g)) + geom_point()
+ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g,color=species))+geom_point()
+ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g,color=species))+geom_point()+facet_wrap(~species)
 
-ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) + 
-geom_point()
-
-ggplot(data=diamonds, aes(x=carat, y=price, color=cut)) +
- geom_point() +
- facet_wrap(~cut)
+#3. do not map the color to specific variable but apply to entire chart
+ggplot(data=penguins)+geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g),color="purple")
 
 
 #----- PART7: NESTED AND PIPE
