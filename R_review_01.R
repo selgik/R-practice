@@ -220,6 +220,13 @@ ggplot(data=penguins)+
   geom_smooth(mapping=aes(x=flipper_length_mm, y=body_mass_g))+
   geom_point(mapping=aes(x=flipper_length_mm, y=body_mass_g))
 
+#different soothing lines
+ggplot(data=penguins,aes(x=flipper_length_mm,y=body_mass_g))+
+  geom_smooth(method="loess")                                       #Loess smoothing
+  
+ggplot(data=penguins,aes(x=flipper_length_mm,y=body_mass_g))+
+  geom_smooth(method="gam",formula=y~s(x))                          #Gam smoothing
+
 
 #----- PART7: NESTED AND PIPE
 #1. filter and sort data step by step 
