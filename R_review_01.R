@@ -227,6 +227,15 @@ ggplot(data=penguins,aes(x=flipper_length_mm,y=body_mass_g))+
 ggplot(data=penguins,aes(x=flipper_length_mm,y=body_mass_g))+
   geom_smooth(method="gam",formula=y~s(x))                          #Gam smoothing
 
+#5. facet function
+ggplot(data=penguins)+
+  geom_point(mapping=aes(x=flipper_length_mm, y=body_mass_g))+
+  facet_wrap(~species)
+
+ggplot(data=penguins)+
+  geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g,color=species))+
+  facet_grid(sex~species)
+
 
 #----- PART7: NESTED AND PIPE
 #1. filter and sort data step by step 
