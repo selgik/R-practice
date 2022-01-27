@@ -207,6 +207,19 @@ ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g,color=species))+geom
 #3. do not map the color to specific variable but apply to entire chart
 ggplot(data=penguins)+geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g),color="purple")
 
+#4. different geoms such as smooth line and bar etc.
+ggplot(data=penguins)+geom_smooth(mapping=aes(x=flipper_length_mm,y=body_mass_g))
+ggplot(data=penguins)+geom_jitter(mapping=aes(x=flipper_length_mm,y=body_mass_g))    
+ggplot(data=penguins)+geom_bar(mapping=aes(x=species))
+ggplot(data=penguins)+geom_bar(mapping=aes(x=species,fill=species))  #color inside of the bar
+ggplot(data=penguins)+geom_bar(mapping=aes(x=species,color=species)) #color outside of the bar
+ggplot(data=penguins)+geom_bar(mapping=aes(x=species,fill=island))   #stacked bar chart
+
+#examine relationship between trend line and data points
+ggplot(data=penguins)+
+  geom_smooth(mapping=aes(x=flipper_length_mm, y=body_mass_g))+
+  geom_point(mapping=aes(x=flipper_length_mm, y=body_mass_g))
+
 
 #----- PART7: NESTED AND PIPE
 #1. filter and sort data step by step 
