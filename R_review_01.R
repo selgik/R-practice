@@ -241,6 +241,15 @@ penguins %>%
   filter(island=="Biscoe") %>%
   ggplot(mapping=aes(x=flipper_length_mm, y=body_mass_g,color=species))+
   geom_point()
+
+#7. add annotation
+ggplot(data=penguins)+
+  geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g, color=species))+
+  labs(title="Palmer Penguins: Relationship between Body Mass vs Flipper Length",
+       subtitle="Body Mass (gram) / Flipper Length (mm) ",
+       caption="R Package used: palmerpenguins")+
+  annotate("text", x=220,y=4000,label="positive relationship observed",
+           angle=45, fontface="bold", size=3)
  
 
 #----- PART7: NESTED AND PIPE
