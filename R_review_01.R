@@ -236,6 +236,12 @@ ggplot(data=penguins)+
   geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g,color=species))+
   facet_grid(sex~species)
 
+#6. filter before visualizing
+penguins %>%
+  filter(island=="Biscoe") %>%
+  ggplot(mapping=aes(x=flipper_length_mm, y=body_mass_g,color=species))+
+  geom_point()
+ 
 
 #----- PART7: NESTED AND PIPE
 #1. filter and sort data step by step 
