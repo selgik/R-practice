@@ -10,9 +10,10 @@
 #PART3: VIEW SUMMARY DATA
 #PART4: ORGANIZE DATA
 #PART5: MANIPULATE DATA
-#PART6: VISUALIZE DATA
-#PART7: NESTED AND PIPE
-#PART8: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#PART6: NESTED AND PIPE
+#PART7: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#PART8: VISUALIZE DATA
+#PART9: SAVE THE VISUALS
 
 #TIP1 : DO NOT TRUST DATA 
 #TIP2 : CHECK THE BIAS
@@ -186,12 +187,67 @@ example4 <- bookings_data %>%
          average_lead_time=mean(lead_time))
 
 #example3 vs example4: ex3 shows summary statistics in one line. head() works well for ex3.
+ 
+
+#----- PART6: NESTED AND PIPE
+#1. filter and sort data step by step 
+data("ToothGrowth")
+View(ToothGrowth)
+
+#install or load dplyr for filtering function.
+library(dplyr)
+filtered_tg <- filter(ToothGrowth,dose==0.5)
+View(filtered_tg)
+
+#sort with arrange function
+arrange(filtered_tg, len)
+
+#2. nested query
+arrange(filter(ToothGrowth,dose==0.5), len)
+
+#3. use pipe: %>%
+filtered_toothgrowth <- ToothGrowth %>%
+filter(dose==0.5) %>%
+arrange(len)
+View(filtered_toothgrowth)
+
+#filter->group->summarize
+filtered_toothgrowth <- ToothGrowth %>%
+filter(dose==0.5) %>%
+group_by(supp) %>%
+summarize(mean_len=mean(len,na.rm=T),.group="drop")
+View(filtered_toothgrowth)
 
 
-#----- PART6: VISUALIZE DATA
+#----- PART7: LOGICAL OPERATION AND CONDITIONAL STATEMENT
+#1. logical operators: and &, or |, not!
+x <-10
+x<12 & x>11      #FALSE
+x<12 | x>11      #TRUE
+!x>11            #TRUE
+!(x>15 | x<5)    #TRUE
+
+#2. conditional statement: if(){then}
+x<- 5
+if(x>0){
+print("x is a positive number")
+} else {
+print("x is a negative number")
+}
+
+y <-1982
+if (y>1990) {
+print("Group1")
+} else if (y>1980) {
+print("Group2")
+} else {
+print("Group3")
+}
+
+#----- PART8: VISUALIZE DATA
 #1. basic
 ggplot(data=penguins) + geom_point(mapping=aes(x=flipper_length_mm, y=body_mass_g))
-ggplot(data=penguins, mapping=aes(x=flipper_length_mm, y=body_mass_g)) + geom_point
+ggplot(data=penguins, mapping=aes(x=flipper_length_mm, y=body_mass_g)) + geom_point()
 
 #2. map color, size, shape or alpha(difference in density)
 ggplot(data=penguins)+geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g,color=species))
@@ -242,7 +298,7 @@ penguins %>%
   ggplot(mapping=aes(x=flipper_length_mm, y=body_mass_g,color=species))+
   geom_point()
 
-#7. add annotation
+#7. add label and annotation
 ggplot(data=penguins)+
   geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g, color=species))+
   labs(title="Palmer Penguins: Relationship between Body Mass vs Flipper Length",
@@ -250,62 +306,22 @@ ggplot(data=penguins)+
        caption="R Package used: palmerpenguins")+
   annotate("text", x=220,y=4000,label="positive relationship observed",
            angle=45, fontface="bold", size=3)
- 
 
-#----- PART7: NESTED AND PIPE
-#1. filter and sort data step by step 
-data("ToothGrowth")
-View(ToothGrowth)
+#8. add label using variable
+minamount <- min(dataframe$column)
+maxamount <- max(dataframe$column)
+  
+labs(caption=paste0("The minimum is ",minamount," and the maximum is ", maxamount))
 
-#install or load dplyr for filtering function.
-library(dplyr)
-filtered_tg <- filter(ToothGrowth,dose==0.5)
-View(filtered_tg)
+#9. add x/y axis header title
+labs(x="X-axis name", y="Y-axis name")
 
-#sort with arrange function
-arrange(filtered_tg, len)
-
-#2. nested query
-arrange(filter(ToothGrowth,dose==0.5), len)
-
-#3. use pipe: %>%
-filtered_toothgrowth <- ToothGrowth %>%
-filter(dose==0.5) %>%
-arrange(len)
-View(filtered_toothgrowth)
-
-#filter->group->summarize
-filtered_toothgrowth <- ToothGrowth %>%
-filter(dose==0.5) %>%
-group_by(supp) %>%
-summarize(mean_len=mean(len,na.rm=T),.group="drop")
-View(filtered_toothgrowth)
+#10. rotate x-axis headers 
+theme(axis.text.x=element_text(angle=45))
 
 
-#----- PART8: LOGICAL OPERATION AND CONDITIONAL STATEMENT
-#1. logical operators: and &, or |, not!
-x <-10
-x<12 & x>11      #FALSE
-x<12 | x>11      #TRUE
-!x>11            #TRUE
-!(x>15 | x<5)    #TRUE
-
-#2. conditional statement: if(){then}
-x<- 5
-if(x>0){
-print("x is a positive number")
-} else {
-print("x is a negative number")
-}
-
-y <-1982
-if (y>1990) {
-print("Group1")
-} else if (y>1980) {
-print("Group2")
-} else {
-print("Group3")
-}
+#PART9: SAVE THE VISUALS
+ggsave("test_visuals.png", width=5, height=5)
 
 
 #----- TIP1: DO NOT TRUST DATA
