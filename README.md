@@ -9,17 +9,9 @@ It will show the code results such as data frame or visuals. Check out full repo
    </tr>
    
 <tr>
-  <td><a href="https://rpubs.com/Sylvia_K/RCNotes"><img src="RMarkdown_images/Screenshot (1).png" width=300 height=200></a></img></td>
-  <td><a href="https://rpubs.com/Sylvia_K/RCNotes"><img src="RMarkdown_images/Screenshot (2).png" width=300 height=200></a></img></td>
+  <td><a href="http://rpubs.com/Sylvia_K/RCNotesv2"><img src="RMarkdown_images/ss1.png" width=300 height=200></a></img></td>
+  <td><a href="http://rpubs.com/Sylvia_K/RCNotesv2"><img src="RMarkdown_images/ss2.png" width=300 height=200></a></img></td>
   </tr>
 
-<tr>
-    <td> Screenshot#3</td>
-    <td> Screenshot#4</td>
-  </tr>
 
-<tr>
-  <td><a href="https://rpubs.com/Sylvia_K/RCNotes"><img src="RMarkdown_images/Screenshot (3).png" width=300 height=200></a></img></td>
-  <td><a href="https://rpubs.com/Sylvia_K/RCNotes"><img src="RMarkdown_images/Screenshot (4).png" width=300 height=200></a></img></td>
-  </td
 </table>
