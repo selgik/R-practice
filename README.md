@@ -1,6 +1,6 @@
 # R-practice
 For the purpose of self study and code review, R markdown report has been created. 
-It will show the code results such as data frame or visuals. Check out full report by clicking images below.
+It will show the code results such as data frame or visuals. Check out full report by *clicking* images below.
 
 <table>
   <tr>
