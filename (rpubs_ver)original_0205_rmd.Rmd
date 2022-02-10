@@ -1,0 +1,577 @@
+---
+title: "**R Code Notes**"
+author: "*created by Sylvia Kim*"
+date: "*version 2022-02-05*"
+output:
+ html_document:
+    toc: true
+    toc_float:
+      toc_collapsed: true
+    toc_depth: 3
+    number_sections: false
+    theme: yeti
+---
+***
+
+## **Introduction**
+For the purpose of self study and code review, this R markdown report has been created. The original contents can be found on [**Sylvia's GitHub.**](https://github.com/selgik/R-practice) 
+
+### **Package used**
+* dplyr  
+* janitor  
+* palmerpenguins  
+* skimr  
+* tidyverse  
+
+### **Table of contents**
+#### **Part 1: Concepts**  
+1. Functions and variables  
+2. Vectors and data frames  
+
+#### **Part 2: Basic**
+1. Install and load packages 
+2. Prepare data 
+3. Inspect data
+4. Organize data
+5. Manipulate data
+6. Nested and pipe
+7. Logical operator and conditional statement
+8. Visualize data
+9. Save the visuals
+
+#### **Part 3: Tips**
+1. Do not assume
+2. Check for bias
+
+*****
+
+## **Part 1: Concepts**  
+
+### **1-1. Functions and variables**  
+**functions**: a code to perform a specific task. Type function and then add argument within the (). Example:
+```{r}
+print("It's a beautiful day!")
+```
+
+
+**variable**: a value which can be stored for later use. Also called as objects. Define variable name followed by <- and function.
+```{r}
+var_x <- "this is variable"
+var_y <- 123.45
+```
+
+A calculation can be performed with variable as below:
+```{r}
+var_y - 23.45
+```
+
+Ask about function by adding ? before function name.
+```{r eval=FALSE}
+?print()
+```
+
+or find out more about the packages.
+```{r eval=FALSE}
+browseVignettes("tidyverse")
+```
+
+
+### **1-2. Vectors and data frames**  
+**vector**: a group of data elements of the same type stored in a sequence. Once a vector is created, it will show as a set of data.
+
+```{r}
+vec_1 <- c(12,34,56,78.9)
+vec_2 <- c(1L, 5L, 10L)
+vec_3 <- c("Anna", "Beta", "Cera", "Delta")
+```
+
+now, let's run one of vector (vec_3) below.
+```{r echo=FALSE}
+vec_3
+```
+
+**list**: it's similar to vector but it can contain different data type. 
+```{r}
+list_1 <- list("a", 1L, 3.5, FALSE)
+```
+
+Other operations can be done to vectors including:  
+calculating the length of vector 
+```{r}
+length(vec_3)
+```
+
+or, assigning titles to vector can be done too.
+```{r echo=TRUE}
+names(vec_1) <- c("spring", "summer", "fall", "winter")
+print(vec_1)
+```
+
+The same can be done to list.
+```{r}
+list1 <- list('x-axis'=1, 'y-axis'=2, 'z-axis'=3)
+print(list1)
+```
+
+
+**data frame**: collection of columns, typically imported from different source.
+Example below:
+```{r}
+df_1 <- data.frame(city=c("NY", "SF", "CO"), days=c(2.4, 4.4, 5.1), rank=c(2,1,3))
+```
+
+
+or codes can be added step by step by first defining the variables:
+```{r eval=FALSE}
+city <- c("NY", "SF", "CO")
+days <- c(2.4, 4.4, 5.1)
+rank <- c(2,1,3)
+df_1 <- data.frame(city,days,rank)
+```
+
+Now, let's run the code to see the result.
+```{r echo=FALSE}
+df_1
+```
+
+**matrix**: two-dimentional collection of data elements, containing a single data type.
+
+```{r}
+matrix(c(3:10), nrow=2)
+matrix(c(3:10), ncol=2)
+```
+
+Note that *matrix(c(3:9), nrow=2)* will give an error, as 7 elements are not 2x multiplier.
+
+***  
+## **Part 2: Basic**
+### **2-1. Install and load packages**
+Check installed packages. If needed, install for use.
+```{r eval=FALSE}
+installed.packages()
+install.packages("palmerpenguins")
+```
+
+load package and/or dataset before using it. Nothing will show up in the console:
+```{r eval=FALSE}
+library(palmerpenguins) 
+data(penguins)
+```
+
+### **2-2. Prepare data**
+Import csv file and select certain columns:
+```{r eval=FALSE}
+csv_file <- read_csv("test.csv")
+select(csv_file, column1, column2, column3)
+```
+
+Import excel file and read specific sheet:
+```{r eval=FALSE}
+read_excel("test.xls")
+excel_sheets("test.xls")
+read_excel("test.xls", sheet="sales")
+```
+
+
+### **2-3. Inspect data**
+View will display data in reader-friendly table format in separate tab:
+```{r eval=FALSE}
+View(penguins)  
+```
+
+Also, summary data can be reviewed with below functions. 
+```{r include=FALSE}
+library("palmerpenguins")
+library("tidyverse")
+```
+
+```{r eval=FALSE}
+head(penguins)
+colnames(penguins)
+glimpse(penguins)
+str(penguins)
+```
+
+As an example, str() has been run as below:
+```{r}
+str(penguins)
+```
+
+Summary statistics can also be checked:
+```{r eval=FALSE}
+skim_without_charts(penguins) 
+summary(penguins)                  
+```
+
+Example of summary():
+```{r}
+summary(penguins)                  
+```
+
+Inspect specific column(s):
+```{r eval=FALSE}
+select(penguins, species) 
+```
+
+By adding - sign before the column, result will display all columns except for marked column. See example, same as *select(penguins, -species)*: 
+```{r}
+penguins %>%
+  select(-species)
+```
+
+
+### **2-4. Organize data**
+
+Sort the data. By adding - sign, sort in DESC order instead of default ASC:
+```{r eval=FALSE}
+arrange(penguins, bill_length_mm)
+arrange(penguins, desc(bill_length_mm))
+penguins %>% arrange(bill_length_mm)
+penguins %>% arrange(-bill_length_mm)
+```
+
+Filter values:
+```{r eval=FALSE}
+filter(penguins, species=='Gentoo')
+```
+
+Example of using arrange and filter functions:
+```{r}
+penguins %>% 
+  filter(species=="Gentoo") %>%
+  select(species, island, body_mass_g) %>%
+  arrange(-body_mass_g)
+```
+
+Find max, min, mean: if dataset contains NA, result will show as NA.
+```{r eval=FALSE}
+min(penguins$year)
+max(penguins$year)
+mean(penguins$year)
+```
+
+Group data for summary statistics. Below example illustrates the process of grouping data -> removing NA values -> assigning new column name -> summarizing them.
+```{r warning=FALSE}
+penguins %>% 
+  group_by(species, island) %>% drop_na() %>%
+  summarize(mean_bl=mean(bill_length_mm),
+            max_bl=max(bill_length_mm))
+```
+
+Save cleaned data frame:
+```{r eval=FALSE}
+cleaned_penguins <- penguins %>% arrange(bill_length_mm)
+cleaned2_penguins <- penguins %>% select(island, species)
+```
+
+
+### **2-5. Manipulate data**
+Rename column or variable: rename(dataset, new_name=old_name): 
+```{r eval=FALSE}
+rename(penguins, weight=body_mass_g)
+```
+
+Update all columns to upper/lower case
+```{r eval=FALSE}
+rename_with(penguins,toupper)
+rename_with(penguins,tolower)
+```
+
+Clean column names by ensuring only characters, numbers and _ are in the columns
+```{r eval=FALSE}
+clean_names(penguins)
+```
+
+Combine columns:
+```{r eval=FALSE}
+unite(data_set, 
+      'new_column_name', 
+      coulmn1_to_unite, 
+      column2_to_unite, 
+      sep=' ,')
+```
+
+Applying as below:
+```{r eval=FALSE}
+example <- bookings_data %>%
+  select(arrival_date_year, arrival_date_month) %>%
+  unite(arrival_year_month, c("arrival_date_year",
+                              "arrival_date_month"), sep = " ,")
+```
+
+Separate column:
+```{r eval=FALSE}
+separate(data_set, 
+         column_to_separate, 
+         into=c('column1', 'colmn2'), 
+         sep= ' ')
+```
+
+Add column: mutate(dataset, new_column=explain)
+```{r eval=FALSE}
+mutate(penguins, body_mass_kg=body_mass_g/1000)
+```
+
+Example below:
+```{r}
+penguins %>%
+  mutate(body_mass_kg=body_mass_g/1000) %>%
+  select(species, island, body_mass_kg) %>%
+  arrange(-body_mass_kg)
+```
+
+Summary statistics: summarize(dataset, col_name=mean(col))
+```{r eval=FALSE}
+penguins %>%
+  drop_na() %>%
+  summarize(avg_g=mean(body_mass_g), sum_g=sum(body_mass_g))
+```
+
+### **2-6. Nested query and pipe**
+Nested query can be written as below:
+```{r eval=FALSE}
+arrange(filter(ToothGrowth, dose==0.5), len)
+```
+
+Using pipe, process step is clearer and less cluttered:
+```{r eval=FALSE}
+filtered_toothgrowth <- ToothGrowth %>%
+  filter(dose==0.5) %>%
+  arrange(len)
+```
+
+
+### **2-7. Conditional statement**
+Logical operators: and &, or |, not!
+```{r}
+x <-10
+
+x<12 & x>11      # false as 10 is not bigger than 11.
+x<12 | x>11      # true, less than 12 or bigger than 11.
+!x>11            # true, not bigger than 11.
+!(x>15 | x<5)    # true, not bigger than 15 or less than 5
+```
+
+Conditional statement: if(){then}
+```{r}
+x <-5
+
+if(x>0){
+  print("x is a positive number")
+  } else {
+    print("x is a negative number")
+    }
+```
+
+
+```{r}
+y <-1982
+
+if (y>1990) {
+  print("Group1")
+  } else if (y>1980) {
+    print("Group2")
+    } else {
+      print("Group3")
+      }
+```
+
+### **2-8. Visualize data**  
+ggplot(data)+geom_shape(mapping=aes(argument)). geom_bar will display bar chart, geom_point will display scatter plot. See below:
+```{r warning=FALSE}
+ggplot(data=penguins)+ 
+  geom_point(mapping=aes(x=flipper_length_mm, y=body_mass_g))
+```
+
+Above can be also written as below:
+```{r eval=FALSE}
+ggplot(data=penguins, 
+       mapping=aes(x=flipper_length_mm,y=body_mass_g))+
+  geom_point()
+```
+
+Enhance the chart by mapping color, size, shape or alpha(difference in density):
+```{r warning=FALSE}
+ggplot(data=penguins)+
+  geom_point(mapping=aes(x=flipper_length_mm,
+                        y=body_mass_g,
+                        color=species,
+                        shape=species))
+```
+
+See the chart with alpha aes:
+```{r warning=FALSE}
+ggplot(data=penguins)+
+  geom_point(mapping=aes(x=flipper_length_mm,
+                         y=body_mass_g,
+                         alpha=species))
+```
+
+
+Below is the alternative way of writing codes for archive purpose:
+```{r eval=FALSE}
+ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g,color=species))+
+  geom_point()
+
+ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g,color=species))+
+  geom_point(color="purple")
+
+ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g,color=species))+
+  geom_point()+
+  facet_wrap(~species)
+```
+
+If color needs to be applied to entire chart instead of specific variables: 
+```{r warning=FALSE}
+ggplot(data=penguins)+
+  geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g),
+             color="purple")
+```
+
+Different chart types can be created by changing geom. For example, smooth line as below:
+```{r warning=FALSE}
+ggplot(data=penguins)+
+  geom_smooth(mapping=aes(x=flipper_length_mm,y=body_mass_g))
+```
+
+bar chart below. If color is used instead of fill, the outline will only be colored:
+```{r warning=FALSE}
+ggplot(data=penguins)+
+  geom_bar(mapping=aes(x=species,fill=species)) 
+```
+
+stacked bar chart:
+```{r warning=FALSE}
+ggplot(data=penguins)+
+  geom_bar(mapping=aes(x=species,fill=island)) 
+```
+
+Examine relationship between trend line and data points by adding two geom:
+```{r warning=FALSE}
+ggplot(data=penguins)+
+  geom_smooth(mapping=aes(x=flipper_length_mm, y=body_mass_g))+
+  geom_point(mapping=aes(x=flipper_length_mm, y=body_mass_g))
+```
+
+There are also different types of soothing lines. For reference:
+```{r eval=FALSE}
+ggplot(data=penguins,aes(x=flipper_length_mm,y=body_mass_g))+
+  geom_smooth(method="loess")                                       #Loess smoothing
+  
+ggplot(data=penguins,aes(x=flipper_length_mm,y=body_mass_g))+
+  geom_smooth(method="gam",formula=y~s(x))                          #Gam smoothing
+```
+
+Facet function is also handy for focusing on specific data points:
+```{r warning=FALSE}
+ggplot(data=penguins)+
+  geom_point(mapping=aes(x=flipper_length_mm, y=body_mass_g))+
+  facet_wrap(~species)
+```
+
+facet_grid for 1+ facet:
+```{r warning=FALSE}
+ggplot(data=penguins)+
+  geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g,color=species))+
+  facet_grid(sex~species)
+```
+
+Other functions can be used as normal:
+```{r eval=FALSE}
+penguins %>%
+  filter(island=="Biscoe") %>%
+  ggplot(mapping=aes(x=flipper_length_mm,y=body_mass_g,color=species))+
+  geom_point()
+```
+
+Adding label and annotation will help readers understand about data:
+```{r warning=FALSE}
+ggplot(data=penguins)+
+  geom_point(mapping=aes(x=flipper_length_mm,y=body_mass_g, color=species))+
+  labs(title="Palmer Penguins: Relationship between Body Mass vs Flipper Length",
+       subtitle="Body Mass (gram) / Flipper Length (mm) ",
+       caption="R Package used: palmerpenguins")+
+  annotate("text", x=220,y=4000,label="positive relationship observed",
+           angle=45, fontface="bold", size=3)
+```
+
+Label can be added using variables too:
+```{r eval=FALSE}
+minamount <- min(dataframe$column)
+maxamount <- max(dataframe$column)
+  
+labs(caption=paste0("The minimum is ",minamount," and the maximum is ", maxamount))
+```
+
+
+Add x/y axis header title if missing:
+```{r eval=FALSE}
+labs(x="X-axis name", y="Y-axis name")
+```
+
+Rotate x-axis headers:
+```{r eval=FALSE}
+theme(axis.text.x=element_text(angle=45))
+```
+
+### **2-9. Save the visuals**
+
+ggsave will save the latest visual:
+```{r eval=FALSE}
+ggsave("test_visuals.png", width=5, height=5)
+```
+
+***  
+
+## **Part 3: Tips** 
+### **3-1. Do not assume**
+
+Summary may indicate the similar dataset for below groups:
+```{r}
+library('Tmisc')
+data(quartet)
+quartet %>%
+  group_by(set) %>%
+  summarize(mean(x),sd(x),mean(y),sd(y),cor(x,y))
+```
+
+
+But visualizing them will reveal the difference between the grouped data:
+```{r warning=FALSE}
+ggplot(quartet,aes(x,y))+
+  geom_point()+
+  geom_smooth(method=lm,se=FALSE)+
+  facet_wrap(~set)
+```
+
+### **3-2. Check for bias**
+Package needed: 
+```{r include=FALSE}
+library(SimDesign)
+library(dplyr)
+```
+
+```{r eval=FALSE}
+install.packages("SimDesign")
+library("SimDesign")
+```
+
+Compare data:
+```{r}
+actual_data <- c(10,20,30,40,50)
+predicted_data <-c(8,14,22,39,45)
+bias(actual_data,predicted_data)
+```
+
+Another example:
+```{r}
+actual_data2 <- c(10,20,30,40,50)
+predicted_data2 <- c(12,24,39,47,55)
+bias(actual_data2, predicted_data2)
+```
+
+The more the result is closer to 0, the less the data is biased.
+
+
+### *END*
+*If you have any feedback, please do not hesitate to reach out sylviahk416@gmail.com*
